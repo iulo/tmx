@@ -1,10 +1,17 @@
 # tmx
 
-tmx watches your filesystem and excludes selected files (such as `node_modules` and `target`) from Time Machine backups. You can also run a full scan from the app.
+tmx is a macOS menu bar utility for keeping selected files and directories out of Time Machine backups. It watches the filesystem incrementally, applies your rules as files change, and also provides a full scan when you want to reconcile everything manually.
 
 ## Original project
 
 This project is maintained at [github.com/iulo/tmx](https://github.com/iulo/tmx) and continues [TimeMachine Exclude (tmexclude)](https://github.com/PhotonQuantum/tmexclude) by [LightQuantum](https://github.com/PhotonQuantum). The original source is licensed under the [MIT License](LICENSE.txt), and its commit history and copyright notices are retained.
+
+## Features
+
+- Incremental filesystem monitoring with event batching to avoid repeated work during large operations such as `pnpm install`.
+- Rules for common generated directories, including `node_modules` and Rust `target` directories.
+- Manual scan, statistics, directory management, and a compact menu bar window.
+- English and Chinese UI translations.
 
 ## Installation
 
@@ -15,9 +22,16 @@ pnpm install --frozen-lockfile
 pnpm tauri build
 ```
 
-For development, run `pnpm tauri dev`. Rust and the macOS development tools are required.
+For development, run `pnpm tauri dev`. Rust, Node.js, pnpm, and the macOS development tools are required. Use `pnpm dev` when you only need the Vite frontend.
 
-The frontend uses Vue 3 with `<script setup>`, Vite, Pinia, and UnoCSS (Wind 4 / Tailwind 4 compatible preset).
+The frontend uses Vue 3 SFCs with `<script setup>`, Vite, Pinia, Element Plus, and UnoCSS with a Tailwind 4 compatible preset. The native shell is built with Tauri 2.
+
+Run the project checks before opening a pull request:
+
+```sh
+pnpm check
+cargo check --manifest-path src-tauri/Cargo.toml
+```
 
 ## Configuration
 
@@ -25,8 +39,8 @@ You can configure tmx in the GUI or edit `~/.config/tmexclude.yaml`. This legacy
 
 ## Screenshots
 
-![Overview](doc/screenshot1.jpeg)
-![Scan](doc/screenshot2.jpeg)
+![tmx overview](doc/overview.svg)
+![tmx about page](doc/about.svg)
 
 ## License
 

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800">
+  <rect width="1280" height="800" rx="18" fill="#f4f7fc"/>
+  <rect width="250" height="800" rx="18" fill="#fff"/>
+  <path d="M250 0v800" stroke="#d9dee8" stroke-width="2"/>
+  <rect x="28" y="28" width="58" height="58" rx="18" fill="#55b887"/>
+  <text x="46" y="67" font-family="Arial,sans-serif" font-size="38" font-weight="700" fill="#fff">↻</text>
+  <text x="102" y="57" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#30343b">tmx</text>
+  <text x="102" y="79" font-family="Arial,sans-serif" font-size="12" fill="#92a2bb">Time Machine Exclude</text>
+  <g font-family="Arial,sans-serif" font-size="18" fill="#30343b">
+    <text x="54" y="150" fill="#5798fa">▥  Statistics</text>
+    <text x="54" y="210">⚙  General</text><text x="54" y="270">▤  Rules</text>
+    <text x="54" y="330">▱  Directories</text><text x="54" y="390">▷  Scan</text><text x="54" y="450">●  About</text>
+  </g>
+  <text x="28" y="748" font-family="Arial,sans-serif" font-size="13" fill="#9aaac2">Control what Time Machine</text>
+  <text x="28" y="768" font-family="Arial,sans-serif" font-size="13" fill="#9aaac2">backs up · v0.3.0</text>
+  <text x="300" y="80" font-family="Arial,sans-serif" font-size="42" fill="#30343b">Looks good</text>
+  <text x="300" y="114" font-family="Arial,sans-serif" font-size="21" fill="#92a2bb">tmx is running quietly in the background.</text>
+  <rect x="1080" y="62" width="122" height="36" rx="8" fill="#eff9e9" stroke="#cfeabd"/>
+  <circle cx="1102" cy="80" r="6" fill="#7fc24a"/><text x="1117" y="87" font-family="Arial,sans-serif" font-size="16" fill="#73b642">Protected</text>
+  <g fill="#fff" stroke="#dce2eb" stroke-width="2">
+    <rect x="300" y="170" width="420" height="220" rx="10"/><rect x="750" y="170" width="420" height="220" rx="10"/>
+    <rect x="300" y="420" width="870" height="270" rx="10"/>
+  </g>
+  <g font-family="Arial,sans-serif" text-anchor="middle"><text x="510" y="245" font-size="52" font-weight="700" fill="#30343b">0</text><text x="510" y="280" font-size="18" fill="#92a2bb">Files excluded</text><text x="960" y="245" font-size="52" font-weight="700" fill="#30343b">33</text><text x="960" y="280" font-size="18" fill="#92a2bb">Files included</text></g>
+  <text x="335" y="465" font-family="Arial,sans-serif" font-size="22" fill="#30343b">Latest activity</text>
+</svg>
