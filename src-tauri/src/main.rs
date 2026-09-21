@@ -5,9 +5,6 @@
     windows_subsystem = "windows"
 )]
 
-#[macro_use]
-extern crate objc;
-
 use std::sync::Arc;
 
 use once_cell::sync::Lazy;
