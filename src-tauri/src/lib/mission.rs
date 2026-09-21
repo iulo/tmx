@@ -10,7 +10,7 @@ use parking_lot::{Mutex, RwLock};
 use serde::Serialize;
 use serde_json::Value;
 use tauri::async_runtime::{channel, JoinHandle};
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Emitter};
 use tracing::error;
 use ts_rs::TS;
 
@@ -143,13 +143,13 @@ impl Mission {
 
         // Broadcast new config.
         self.app
-            .emit_all("config_changed", self.config())
+            .emit("config_changed", self.config())
             .expect("failed to broadcast event");
     }
     fn set_scan_status(&self, status: ScanStatus) {
         *self.scan_status.write() = status.clone();
         self.app
-            .emit_all("scan_status_changed", status)
+            .emit("scan_status_changed", status)
             .expect("failed to broadcast event");
     }
     pub fn stop_full_scan(&self) {

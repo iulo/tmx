@@ -2,6 +2,7 @@
 /target
 /.idea
 /dist
+/src-tauri/gen
 /release
 
 /.next

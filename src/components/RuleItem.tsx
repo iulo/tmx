@@ -1,5 +1,5 @@
 import {Accordion, ActionIcon, Group, Menu, MultiSelect, SegmentedControl, Stack, Text, TextInput} from "@mantine/core";
-import {IconDots, IconPencil, IconTrash} from "@tabler/icons";
+import {IconDots, IconPencil, IconTrash} from "@tabler/icons-react";
 import {useSetRecoilState} from "recoil";
 import {perRuleState, rulesState} from "../states";
 import React, {useState} from "react";
@@ -75,7 +75,7 @@ export const RuleItem = React.memo(({
   };
 
   return (<Accordion.Item key={name} value={name}>
-    <Group sx={{flexWrap: "nowrap"}} mr={"sm"} spacing={0}>
+    <Group sx={{flexWrap: "nowrap"}} mr={"sm"} gap={0}>
       <Accordion.Control>
         {renaming ? <TextInput
           autoFocus
@@ -104,15 +104,15 @@ export const RuleItem = React.memo(({
           <ActionIcon size={"lg"}><IconDots size={16}/></ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item icon={<IconPencil size={14}/>} onClick={() => startRename(name)}>{t('rename')}</Menu.Item>
+          <Menu.Item leftSection={<IconPencil size={14}/>} onClick={() => startRename(name)}>{t('rename')}</Menu.Item>
           <Menu.Item color={"red"}
-                     icon={<IconTrash size={14}/>}
+                     leftSection={<IconTrash size={14}/>}
                      onClick={deleteRule}>{t('delete')}</Menu.Item>
         </Menu.Dropdown>
       </Menu>
     </Group>
     <Accordion.Panel>
-      <Stack spacing={"xs"}>
+      <Stack gap={"xs"}>
         <SegmentedControl
           size={"xs"}
           data={[{
@@ -135,8 +135,17 @@ export const RuleItem = React.memo(({
           placeholder={t("pick_merge_rules")!}
         />) : (<>
           <Text size="sm">{t('paths_to_exclude')}</Text>
-          <MultiSelect searchable creatable
-                       getCreateLabel={(value) => `+ New ${value}`}
+          <TextInput placeholder="Add path and press Enter" onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              const path = event.currentTarget.value.trim();
+              if (path && !value.excludes.includes(path)) {
+                setValue({...value, excludes: [...value.excludes, path]});
+              }
+              event.currentTarget.value = '';
+            }
+          }}/>
+
+          <MultiSelect searchable
                        data={allPaths.map((v) => ({
                          value: v,
                          label: v
@@ -152,8 +161,16 @@ export const RuleItem = React.memo(({
           <Text size="sm">
             {t('only_if_any_of_these_paths_exists_in_the_same_dire')}
           </Text>
-          <MultiSelect searchable creatable
-                       getCreateLabel={(value) => `+ New ${value}`}
+          <TextInput placeholder="Add path and press Enter" onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              const path = event.currentTarget.value.trim();
+              if (path && !value['if-exists'].includes(path)) {
+                setValue({...value, 'if-exists': [...value['if-exists'], path]});
+              }
+              event.currentTarget.value = '';
+            }
+          }}/>
+          <MultiSelect searchable
                        data={allPaths.map((v) => ({
                          value: v,
                          label: v

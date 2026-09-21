@@ -1,5 +1,5 @@
 import {Box, Card, Container, Group, Stack, Text, ThemeIcon, Title} from "@mantine/core";
-import {IconCheck, IconDots, IconFileMinus, IconFilePlus, IconRadar} from "@tabler/icons";
+import {IconCheck, IconDots, IconFileMinus, IconFilePlus, IconRadar} from "@tabler/icons-react";
 import useSWR from 'swr'
 import {Metrics} from "../../bindings/Metrics";
 import ReactTimeago from "react-timeago";
@@ -28,13 +28,13 @@ export const Stats = () => {
             <IconFilePlus size={30} strokeWidth={1.5}/>
           </ThemeIcon>
           <Box>
-            <Group spacing={"xs"}>
+            <Group gap={"xs"}>
               <ThemeIcon size={16} variant={"outline"} radius={"xl"} color={"green"}>
                 <IconCheck size={12} strokeWidth={3}/>
               </ThemeIcon>
               <Text size={"xl"}>{t('files', {'count': data?.["files-excluded"]})}</Text>
             </Group>
-            <Text size={"sm"} color={"dimmed"}>{t('have_been_excluded_from_timemachine_backups')}</Text>
+            <Text size={"sm"} c={"dimmed"}>{t('have_been_excluded_from_timemachine_backups')}</Text>
           </Box>
         </Group>
       </Card>
@@ -45,13 +45,13 @@ export const Stats = () => {
             <IconFileMinus size={30} strokeWidth={1.5}/>
           </ThemeIcon>
           <Box>
-            <Group spacing={"xs"}>
+            <Group gap={"xs"}>
               <ThemeIcon size={16} variant={"outline"} radius={"xl"} color={"green"}>
                 <IconCheck size={12} strokeWidth={3}/>
               </ThemeIcon>
               <Text size={"xl"}>{t('files', {'count': data?.["files-included"]})}</Text>
             </Group>
-            <Text size={"sm"} color={"dimmed"}>{t('have_been_reincluded_into_timemachine_backups')}</Text>
+            <Text size={"sm"} c={"dimmed"}>{t('have_been_reincluded_into_timemachine_backups')}</Text>
           </Box>
         </Group>
       </Card>
@@ -62,14 +62,14 @@ export const Stats = () => {
             <IconRadar size={30} strokeWidth={1.5}/>
           </ThemeIcon>
           <Box>
-            <Group spacing={"xs"}>
+            <Group gap={"xs"}>
               <ThemeIcon size={16} variant={"outline"} radius={"xl"} color={"orange"}>
                 <IconDots size={12} strokeWidth={3}/>
               </ThemeIcon>
               <PathText path={data?.["last-excluded"] ? data?.["last-excluded"] : "N/A"} size={"xl"} lineClamp={1}
                         keepFirst={4} keepLast={2}/>
             </Group>
-            <Text size={"sm"} color={"dimmed"}>{(data && data["last-excluded-time"] !== 0) ? <span>
+            <Text size={"sm"} c={"dimmed"}>{(data && data["last-excluded-time"] !== 0) ? <span>
               <Trans i18nKey={"was_excluded"}>
                 was excluded <ReactTimeago formatter={formatter} date={data["last-excluded-time"] * 1000}/>
               </Trans>

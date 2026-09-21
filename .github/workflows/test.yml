@@ -1,146 +1,33 @@
+name: Test
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - master
-
-name: Test
 
 jobs:
-  lint:
-    name: Lint
+  check:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
-        name: Checkout 🛎️
-      - name: setup node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
         with:
-          node-version: 18
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
+          version: 12.4.2
           run_install: false
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
+      - uses: actions/setup-node@v7
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-lint-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-lint-
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+          node-version: 24
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
-      - name: install app dependencies and build it
-        run: pnpm i && pnpm build
-      - uses: Swatinem/rust-cache@v2
-      - name: Check Code Format 🔧
-        run: cargo fmt --check
-        working-directory: ./src-tauri
-      - name: Run Clippy Lints 🔨
-        run: cargo clippy --all-targets --tests
-        working-directory: ./src-tauri
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-
-  test:
-    name: Test
-    runs-on: macos-11
-    env:
-      TEST_FAST: 1
-    steps:
-      - uses: actions/checkout@v3
-        name: Checkout 🛎️
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-test-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-test-
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
-      - name: install app dependencies and build it
-        run: pnpm i && pnpm build
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: src-tauri
-      - name: Running Tests 🚀
-        run: cargo test --tests
-        working-directory: ./src-tauri
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-
-  package:
-    runs-on: macos-12
-    steps:
-      - uses: actions/checkout@v3
-      - name: setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          version: 7
-          run_install: false
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-package-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-package-
-      - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: aarch64-apple-darwin
-      - name: install app dependencies and build it
-        run: pnpm i && pnpm build
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: src-tauri
-      - uses: tauri-apps/tauri-action@dev
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
-          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-        with:
-          args: --target universal-apple-darwin
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: cargo fmt --check
+        working-directory: src-tauri
+      - run: cargo clippy --all-targets --tests
+        working-directory: src-tauri
+      - run: cargo test
+        working-directory: src-tauri

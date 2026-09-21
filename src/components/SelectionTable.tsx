@@ -1,15 +1,16 @@
-import {Checkbox, packSx, ScrollArea, ScrollAreaProps, Sx, Table, TextInput} from "@mantine/core";
+import type {EmotionSx} from "@mantine/emotion";
+import {Checkbox, ScrollArea, ScrollAreaProps, Table, TextInput} from "@mantine/core";
 import React, {useEffect, useMemo, useState} from "react";
 import {PathText} from "./PathText";
 import {useTableStyles} from "../utils";
 import {useTranslation} from "react-i18next";
 
-export interface SelectionTableProps extends Omit<ScrollAreaProps, "onChange"> {
+export interface SelectionTableProps extends Omit<ScrollAreaProps, "onChange" | "sx"> {
   data: Array<string>,
   limit: number,
   selection: Array<string>,
   onTruncated: (c: number | null) => void,
-  sx?: Sx | Sx[],
+  sx?: EmotionSx | EmotionSx[],
   onChange: React.Dispatch<React.SetStateAction<Array<string>>>,
 }
 
@@ -41,7 +42,7 @@ export const SelectionTable = React.memo(({
   }, [filtered, limit]);
 
   return (
-    <ScrollArea sx={[{height: "100%"}, ...packSx(sx)]} styles={{scrollbar: {zIndex: 20}}} {...props}>
+    <ScrollArea sx={sx && !Array.isArray(sx) ? sx : {height: "100%"}} styles={{scrollbar: {zIndex: 20}}} {...props}>
       <Table sx={{tableLayout: "fixed"}}>
         <thead className={cx(classes.stickyHeader)} style={{zIndex: 10}}>
         <tr>
@@ -50,7 +51,7 @@ export const SelectionTable = React.memo(({
               onChange={toggleAll}
               checked={allSelected}
               indeterminate={selection.length > 0 && !allSelected}
-              transitionDuration={0}
+
             />
           </th>
           <th>
@@ -87,7 +88,7 @@ const SelectionRow = React.memo(({selected, item, onToggle}: SelectionRowProps) 
     <tr key={item} className={cx({[classes.rowSelected]: selected})}>
       <td>
         <Checkbox styles={{body: {marginTop: "auto"}}}
-                  checked={selected} onChange={() => onToggle(item)} transitionDuration={0}/>
+                  checked={selected} onChange={() => onToggle(item)} />
       </td>
       <td>
         <PathText keepFirst={4} keepLast={2} path={item} lineClamp={1} withinPortal/>
@@ -95,4 +96,3 @@ const SelectionRow = React.memo(({selected, item, onToggle}: SelectionRowProps) 
     </tr>
   );
 });
-

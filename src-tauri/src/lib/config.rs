@@ -290,6 +290,7 @@ pub enum PreRule {
     Union(Vec<String>),
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct AdhocError(String);
 

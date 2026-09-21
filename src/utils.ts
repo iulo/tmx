@@ -1,5 +1,6 @@
+import {createStyles} from "@mantine/emotion";
 import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {createStyles, keyframes} from "@mantine/core";
+import {keyframes} from "@mantine/emotion";
 
 export const disableMenu = () => {
   if (typeof window === "undefined") {
@@ -7,7 +8,7 @@ export const disableMenu = () => {
   }
 
   // @ts-ignore
-  if (window.__TAURI__.environment !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     return
   }
 
@@ -82,14 +83,12 @@ export const useIsOverflow = <T extends HTMLElement = any>() => {
 export const useTableStyles = createStyles((theme) => ({
   rowSelected: {
     backgroundColor:
-      theme.colorScheme === 'dark'
-        ? theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.2)
-        : theme.colors[theme.primaryColor][0],
+      "light-dark(var(--mantine-color-blue-0), rgba(25, 113, 194, 0.2))",
   },
   stickyHeader: {
     position: 'sticky',
     top: 0,
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    backgroundColor: "light-dark(#fff, var(--mantine-color-dark-7))",
   },
 }))
 
@@ -105,12 +104,12 @@ export const useAnimateStyles = createStyles({
 })
 
 export const swrFetcher = async (key: string) => {
-  const invoke = await import("@tauri-apps/api").then(tauri => tauri.invoke);
+  const invoke = await import("@tauri-apps/api/core").then(tauri => tauri.invoke);
   return await invoke<any>(key);
 }
 
 export const evDrag = async (ev: { preventDefault: () => void; }) => {
-  const {appWindow} = await import("@tauri-apps/api/window");
+  const {getCurrentWindow} = await import("@tauri-apps/api/window");
   ev.preventDefault();
-  await appWindow.startDragging();
+  await getCurrentWindow().startDragging();
 };

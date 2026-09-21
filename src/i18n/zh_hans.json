@@ -50,7 +50,7 @@
   "exclude_paths_that_match_these_patterns": "排除与这些模式匹配的路径",
   "patterns_must_be_applied_by_at_least_one_directory": "模式必须至少由一个目录应用才能生效。",
   "looks_good": "看起来不错！",
-  "timemachine_exclude_is_running": "TimeMachine Exclude 正在运行。",
+  "timemachine_exclude_is_running": "tmx 正在运行。",
   "files": "{{count}} 个文件",
   "was_excluded": "在 <1/> 被排除",
   "run_a_manual_scan": "运行手动扫描",

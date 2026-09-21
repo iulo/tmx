@@ -1,11 +1,10 @@
 #![allow(non_snake_case)]
 
-use cocoa::appkit::NSWindowTitleVisibility;
 use cocoa::appkit::{CGFloat, NSView, NSWindow, NSWindowButton};
 use cocoa::base::id;
 use cocoa::foundation::{NSPoint, NSRect};
 use objc::msg_send;
-use tauri::{Runtime, Window, WindowEvent};
+use tauri::{Runtime, WebviewWindow, WindowEvent};
 
 #[derive(Debug, Copy, Clone)]
 pub struct Margin {
@@ -14,19 +13,10 @@ pub struct Margin {
 }
 
 pub trait WindowExt {
-    fn set_transparent_titlebar(&self);
     fn set_trafficlights_position(&self, x: CGFloat, y: CGFloat);
 }
 
-impl<R: Runtime> WindowExt for Window<R> {
-    fn set_transparent_titlebar(&self) {
-        unsafe {
-            let id = self.ns_window().unwrap().cast::<objc::runtime::Object>();
-
-            id.setTitleVisibility_(NSWindowTitleVisibility::NSWindowTitleHidden);
-            id.setTitlebarAppearsTransparent_(cocoa::base::YES);
-        }
-    }
+impl<R: Runtime> WindowExt for WebviewWindow<R> {
     fn set_trafficlights_position(&self, x: CGFloat, y: CGFloat) {
         let margin = Margin { x, y };
 

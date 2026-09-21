@@ -1,6 +1,6 @@
 import {motion} from "framer-motion";
 import {ActionIcon, Card, Group, Stack, Text, useMantineTheme} from "@mantine/core";
-import {IconAnalyze, IconHomeSearch, IconRefreshAlert} from "@tabler/icons";
+import {IconAnalyze, IconHomeSearch, IconRefreshAlert} from "@tabler/icons-react";
 import React from "react";
 import {fadeAnimation} from "../../../transitions";
 import {startFullScan} from "../../../commands";

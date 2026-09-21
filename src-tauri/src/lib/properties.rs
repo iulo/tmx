@@ -8,7 +8,7 @@ use std::sync::Arc;
 
 use parking_lot::Mutex;
 use serde_json::{Map, Value};
-use tauri::{AppHandle, Manager, Runtime};
+use tauri::{AppHandle, Emitter, Runtime};
 use tracing::error;
 
 #[derive(Debug, Clone)]
@@ -51,12 +51,12 @@ impl Store {
         let mut data = self.data.lock();
         data.insert(key, value);
         std::fs::write(&self.path, serde_json::to_vec(&*data).unwrap()).unwrap();
-        drop(handle.emit_all("properties_changed", data.clone()));
+        drop(handle.emit("properties_changed", data.clone()));
     }
     pub fn del<R: Runtime>(&self, handle: &AppHandle<R>, key: &str) {
         let mut data = self.data.lock();
         data.remove(key);
         std::fs::write(&self.path, serde_json::to_vec(&*data).unwrap()).unwrap();
-        drop(handle.emit_all("properties_changed", data.clone()));
+        drop(handle.emit("properties_changed", data.clone()));
     }
 }

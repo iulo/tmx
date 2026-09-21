@@ -2,95 +2,69 @@
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "TimeMachine Exclude",
-    "version": "0.2.2"
-  },
-  "tauri": {
-    "allowlist": {
-      "window": {
-        "startDragging": true,
-        "show": true
-      },
-      "dialog": {
-        "open": true
-      },
-      "path": {
-        "all": true
-      },
-      "shell": {
-        "open": "^https?://(twitter.com|github.com|gitlab.com)"
-      }
+  "bundle": {
+    "active": true,
+    "category": "Utility",
+    "copyright": "",
+    "targets": "all",
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
     },
-    "systemTray": {
-      "iconPath": "icons/tray_icon.png",
-      "iconAsTemplate": true
+    "longDescription": "",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
     },
-    "bundle": {
-      "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+    "resources": [],
+    "shortDescription": "",
+    "linux": {
       "deb": {
         "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "me.lightquantum.tmexclude",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
       }
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": true,
-      "dialog": true,
-      "endpoints": [
-        "https://tmexclude-tauri-update.lightquantum.me/v1/{{target}}/{{arch}}/{{current_version}}"
-      ],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDNEQzREQTVEQzc3QkIyMTUKUldRVnNudkhYZHJFUFhiMkdHaGcwSGE0aUQzRHlsMzFMczNQWldmU3V2czNhVXNxbGdNRW9XRCsK"
-    },
+    }
+  },
+  "productName": "tmx",
+  "mainBinaryName": "tmx",
+  "version": "0.3.0",
+  "identifier": "app.tmx.desktop",
+  "plugins": {},
+  "app": {
+    "macOSPrivateApi": true,
     "windows": [
       {
         "label": "main",
         "title": "Preferences",
-        "url": "/main/stats",
+        "url": "/#/main/stats",
         "fullscreen": false,
-        "resizable": false,
+        "resizable": true,
         "visible": false,
         "height": 600,
         "width": 800,
         "transparent": true,
         "titleBarStyle": "Overlay",
-        "hiddenTitle": true
+        "hiddenTitle": true,
+        "useHttpsScheme": true
       },
       {
         "label": "about",
         "title": "About",
-        "url": "/about",
+        "url": "/#/about",
         "fullscreen": false,
         "center": true,
         "resizable": false,
@@ -98,31 +72,36 @@
         "height": 300,
         "width": 430,
         "hiddenTitle": true,
-        "titleBarStyle": "Overlay"
+        "titleBarStyle": "Overlay",
+        "useHttpsScheme": true
       },
       {
         "label": "ack",
         "title": "Acknowledgements",
-        "url": "/ack",
+        "url": "/#/ack",
         "fullscreen": false,
         "center": true,
         "resizable": false,
         "visible": false,
         "height": 400,
-        "width": 600
+        "width": 600,
+        "useHttpsScheme": true
       },
       {
         "label": "license",
         "title": "License",
-        "url": "/license",
+        "url": "/#/license",
         "fullscreen": false,
         "center": true,
         "resizable": false,
         "visible": false,
         "height": 400,
-        "width": 600
+        "width": 600,
+        "useHttpsScheme": true
       }
     ],
-    "macOSPrivateApi": true
+    "security": {
+      "csp": null
+    }
   }
 }

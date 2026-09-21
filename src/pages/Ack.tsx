@@ -1,10 +1,17 @@
+import {isTauri} from "@tauri-apps/api/core";
+import {openUrl} from "@tauri-apps/plugin-opener";
 import {Box, Container, Group, ScrollArea, Table, Tabs, Text} from "@mantine/core";
 import {cargoLicenses, License, npmLicenses} from "../licenses";
 import {useViewportSize} from "@mantine/hooks";
 import {useTranslation} from "react-i18next";
 
 const A = (props: { href: string, children: React.ReactNode }) => (
-  <Text inline sx={{cursor: "pointer"}} c={"blue"} component={"a"} target={"_blank"} {...props}/>
+  <Text inline sx={{cursor: "pointer"}} c={"blue"} component={"a"} target={"_blank"} onClick={(event) => {
+      if (isTauri()) {
+        event.preventDefault();
+        void openUrl(props.href);
+      }
+    }} {...props}/>
 )
 
 const DepTab = ({deps}: { deps: Array<License> }) => {
@@ -24,14 +31,14 @@ const DepTab = ({deps}: { deps: Array<License> }) => {
           deps.map(({name, license, repository, version}) => (
             <tr key={name}>
               <td>
-                <Group spacing={"xs"}>
+                <Group gap={"xs"}>
                   {
                     repository !== null ?
                       <A href={repository}>{name}</A>
                       :
                       <Text>{name}</Text>
                   }
-                  {version && <Text span inline inherit color={"dimmed"}>{version}</Text>}
+                  {version && <Text span inline inherit c={"dimmed"}>{version}</Text>}
                 </Group>
               </td>
               <td><Text>{license}</Text></td>

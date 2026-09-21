@@ -3,7 +3,7 @@ import {motion} from "framer-motion";
 import {useElementSize, useViewportSize} from "@mantine/hooks";
 import {NavBar} from "./NavBar";
 import {MainHeader} from "./Header";
-import {Outlet, useLocation} from "react-router-dom";
+import {Outlet, useLocation} from "react-router";
 
 const variants = {
   hidden: {opacity: 0},
@@ -29,8 +29,8 @@ export const MainLayout = () => {
       <MainHeader ref={ref}/>
       <Container
         sx={(theme) => ({
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
-          height: vh - headerHeight - theme.spacing.xs * 2 - 1,
+          backgroundColor: "light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8))",
+          height: `calc(${vh - headerHeight - 1}px - 2 * var(--mantine-spacing-xs))`,
           width: "100%"
         })}>
         <motion.div

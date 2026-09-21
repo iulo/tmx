@@ -19,7 +19,7 @@ export const codeToDisplayName = (languageCode: string, t: TFunction) => {
 const supported = ["en", "zh-Hans"];
 
 export const availableLanguages = (t: TFunction) => (["auto", ...supported].map(code => ({
-  value: code, label: codeToDisplayName(code, t)
+  value: code, label: codeToDisplayName(code, t) ?? code
 })));
 
 export const zh_CN_formatter = buildFormatter(zh_CN_strings);

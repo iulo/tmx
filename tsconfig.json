@@ -7,23 +7,21 @@
       "esnext"
     ],
     "allowJs": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "incremental": true,
+    "incremental": false,
     "esModuleInterop": true,
     "module": "esnext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "types": ["vite/client"],
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-  ],
+  "include": ["src/env.d.ts", "src/main.ts", "src/router.ts", "src/store.ts", "src/**/*.vue", "src/commands.ts", "src/bindings/**/*.ts", "vite.config.ts", "uno.config.ts"],
   "exclude": [
-    "node_modules"
+    "node_modules", "src/**/*.tsx", "src/equalSelector.ts", "src/utils.ts", "src/transitions.ts"
   ]
 }

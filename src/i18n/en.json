@@ -53,7 +53,7 @@
   "exclude_paths_that_match_these_patterns": "Exclude paths that match these patterns",
   "patterns_must_be_applied_by_at_least_one_directory": "Patterns must be applied by at least one directory to take effect.",
   "looks_good": "Looks good!",
-  "timemachine_exclude_is_running": "TimeMachine Exclude is running.",
+  "timemachine_exclude_is_running": "tmx is running.",
   "files_one": "{{count}} File",
   "files_other": "{{count}} Files",
   "was_excluded": "was excluded <1/>",

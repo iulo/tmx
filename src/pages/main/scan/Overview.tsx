@@ -1,6 +1,6 @@
 import {motion} from "framer-motion";
 import {Box, Button, Group, Stack, Text, ThemeIcon, useMantineTheme} from "@mantine/core";
-import {IconChevronLeft, IconFilter, IconHomeCheck, IconHomeExclamation} from "@tabler/icons";
+import {IconChevronLeft, IconFilter, IconHomeCheck, IconHomeExclamation} from "@tabler/icons-react";
 import React from "react";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {
@@ -47,13 +47,13 @@ export const Overview = React.forwardRef(() => {
     <motion.div key={"overview"} style={{height: "100%"}} {...slideFadeAnimation}>
       <Stack py={"xl"} sx={{height: "100%"}}>
         <Button pos={"absolute"} size={"xs"} sx={{boxShadow: "none"}} variant={"subtle"}
-                leftIcon={<IconChevronLeft size={16} strokeWidth={1}/>}
+                leftSection={<IconChevronLeft size={16} strokeWidth={1}/>}
                 onClick={stopFullScan}>
           {t('restart')}
         </Button>
         <Box sx={{flexGrow: 1}}/>
-        <Group sx={{width: "100%"}} position={"center"}>
-          <Group position={"center"} mr={"xl"}>
+        <Group sx={{width: "100%"}} justify={"center"}>
+          <Group justify={"center"} mr={"xl"}>
             <ThemeIcon size={128} radius={64}
                        variant={"gradient"}
                        gradient={(selectedItems > 0) ?
@@ -64,21 +64,21 @@ export const Overview = React.forwardRef(() => {
                 <IconHomeCheck size={72} strokeWidth={1}/>}
             </ThemeIcon>
           </Group>
-          <Stack spacing={"xs"}>
-            <Text size={20}>{t('scan_complete')}</Text>
+          <Stack gap={"xs"}>
+            <Text fz={20}>{t('scan_complete')}</Text>
             {(totalItems > 0) ? <>
-              <Group align={"end"} spacing={"xs"}>
-                <Text size={28} color={theme.colorScheme === "dark" ? theme.colors.blue[2] : theme.colors.blue[5]}>
+              <Group align={"end"} gap={"xs"}>
+                <Text fz={28} c={"light-dark(var(--mantine-color-blue-5), var(--mantine-color-blue-2))"}>
                   {t('items', {count: selectedItems})}
                 </Text>
-                <Text size={"xs"} color={"dimmed"} pb={4}>{t('selected')}</Text>
+                <Text size={"xs"} c={"dimmed"} pb={4}>{t('selected')}</Text>
               </Group>
               <Group align={"center"}>
                 <Button size={"xs"} variant={"light"} sx={{boxShadow: "none"}}
                         onClick={() => setScanPage("detail")}>
                   {t('view_items')}
                 </Button>
-                <Text size={"xs"} color={"dimmed"}>{t('items_found', {count: totalItems})}</Text>
+                <Text size={"xs"} c={"dimmed"}>{t('items_found', {count: totalItems})}</Text>
               </Group>
             </> : <Text size={"sm"}>
               <Trans
@@ -90,9 +90,9 @@ export const Overview = React.forwardRef(() => {
             </Text>}
           </Stack>
         </Group>
-        {(selectedItems > 0) && <Stack align={"center"} spacing={"xs"} mt={"xl"}>
-          <Button variant={"gradient"} leftIcon={<IconFilter/>} onClick={apply}>{t('apply')}</Button>
-          <Text size={"xs"} color={"dimmed"}>
+        {(selectedItems > 0) && <Stack align={"center"} gap={"xs"} mt={"xl"}>
+          <Button variant={"gradient"} leftSection={<IconFilter/>} onClick={apply}>{t('apply')}</Button>
+          <Text size={"xs"} c={"dimmed"}>
             {t("exclude_include_selected_files_from_timemachine_backups")}
           </Text>
         </Stack>}

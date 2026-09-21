@@ -1,6 +1,9 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router";
 import {SWRConfig} from "swr";
 import {MantineProvider} from "@mantine/core";
+import {MantineEmotionProvider, emotionTransform} from "@mantine/emotion";
+import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
 import {RecoilRoot} from "recoil";
 import {useColorScheme} from "@mantine/hooks";
 import {disableMenu} from "./utils";
@@ -70,10 +73,9 @@ export const App = () => {
       }}
     >
       <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
+        stylesTransform={emotionTransform}
+        forceColorScheme={preferredColorScheme === "dark" ? "dark" : "light"}
         theme={{
-          colorScheme: preferredColorScheme,
           components: {
             Text: {
               styles: {
@@ -97,18 +99,18 @@ export const App = () => {
               }
             },
             ScrollArea: {
-              styles: (theme) => ({
+              styles: (theme: import("@mantine/core").MantineTheme) => ({
                 root: {
                   maxHeight: "100%",
                   borderStyle: "solid",
                   borderWidth: "1px",
                   borderRadius: theme.radius.xs,
-                  borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
+                  borderColor: preferredColorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2]
                 },
               })
             },
             Button: {
-              styles: (theme) => ({
+              styles: (theme: import("@mantine/core").MantineTheme) => ({
                 root: {
                   boxShadow: theme.shadows.xs,
                 }
@@ -131,12 +133,14 @@ export const App = () => {
           }
         }}
       >
+        <MantineEmotionProvider>
         <RecoilRoot>
           <SyncActionBatch/>
           <Suspense>
             <RouterProvider router={router}/>
           </Suspense>
         </RecoilRoot>
+        </MantineEmotionProvider>
       </MantineProvider>
     </SWRConfig>
   )

@@ -1,5 +1,5 @@
 import {Accordion, Box, Button, Container, Group, Popover, ScrollArea, Stack, Text, TextInput} from "@mantine/core";
-import {IconPlus, IconTemplate} from "@tabler/icons";
+import {IconPlus, IconTemplate} from "@tabler/icons-react";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {allPathsState, ruleNamesState, rulesState} from "../../states";
 import {useState} from "react";
@@ -34,7 +34,7 @@ const AddButton = () => {
   return (<Popover withArrow trapFocus shadow={"sm"} opened={addPop} onChange={setAddPop} position={"bottom-end"}
                    arrowOffset={width / 2}>
     <Popover.Target>
-      <Button ref={ref} variant={"default"} size={"xs"} leftIcon={<IconPlus size={16}/>}
+      <Button ref={ref} variant={"default"} size={"xs"} leftSection={<IconPlus size={16}/>}
               onClick={() => setAddPop(true)}>
         {t('add_rule')}
       </Button>
@@ -72,7 +72,7 @@ export const Rules = () => {
         <Box><IconTemplate size={32} strokeWidth={1}/></Box>
         <Box sx={{flexGrow: 1}}>
           <Text>{t('exclude_paths_that_match_these_patterns')}</Text>
-          <Text size={"sm"} color={"dimmed"}>
+          <Text size={"sm"} c={"dimmed"}>
             {t('patterns_must_be_applied_by_at_least_one_directory')}
           </Text>
         </Box>
@@ -88,7 +88,7 @@ export const Rules = () => {
             item: {
               borderBottomStyle: "solid",
               borderBottomWidth: "1px",
-              borderBottomColor: theme.colorScheme === 'dark' ? theme.colors.dark[4] : theme.colors.gray[2],
+              borderBottomColor: "light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4))",
             },
             control: {
               padding: theme.spacing.sm

@@ -36,7 +36,7 @@ export const General = () => {
         }}
         label={<>
           <Text size={"md"}>{t('ignore_included_files')}</Text>
-          <Text size={"sm"} color={"dimmed"}>
+          <Text size={"sm"} c={"dimmed"}>
             {t('dont_include_files_into_backups_even_if_they_dont')}
           </Text>
         </>}/>
@@ -48,7 +48,7 @@ export const General = () => {
         }}
         label={<>
           <Text size={"md"}>{t('support_dump_title')}</Text>
-          <Text size={"sm"} color={"dimmed"}>
+          <Text size={"sm"} c={"dimmed"}>
             {t('support_dump_desc')}
           </Text>
         </>}/>

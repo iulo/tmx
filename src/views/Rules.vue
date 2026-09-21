@@ -1,0 +1,12 @@
+<script setup lang="ts">
+import {computed} from 'vue'
+import {useAppStore} from '../store'
+import {ElMessage, ElMessageBox} from 'element-plus'
+const store = useAppStore()
+const entries = computed(() => Object.entries(store.rules))
+async function addRule() { const {value} = await ElMessageBox.prompt('Enter a rule name', 'Add rule', {inputPattern: /\S+/, inputErrorMessage: 'Rule name is required'}); if (await store.addRule(value)) ElMessage.success('Rule added') }
+async function editRule(name: string) { const current = store.rules[name]; const {value} = await ElMessageBox.prompt('Comma separated exclude paths', `Edit ${name}`, {inputValue: Array.isArray(current) ? current.join(', ') : current.excludes.join(', ')}); if (store.config) { const rule = store.config.rules[name]; if (Array.isArray(rule)) store.config.rules[name] = value.split(',').map((x: string) => x.trim()).filter(Boolean); else rule.excludes = value.split(',').map((x: string) => x.trim()).filter(Boolean); await store.save(); ElMessage.success('Rule saved') } }
+async function removeRule(name: string) { await ElMessageBox.confirm(`Delete ${name}?`, 'Confirm', {type: 'warning'}); if (store.config) { delete store.config.rules[name]; await store.save(); ElMessage.success('Rule deleted') } }
+</script>
+<template><section class="page"><div class="heading"><div><h1>Rules</h1><p>Choose which file patterns should be excluded.</p></div><el-button type="primary" @click="addRule">Add rule</el-button></div><el-card><el-table :data="entries.map(([name, rule]) => ({name, rule}))" stripe><el-table-column prop="name" label="Rule" min-width="180"/><el-table-column label="Patterns"><template #default="{row}"><el-tag v-if="Array.isArray(row.rule)" type="info">{{ row.rule.length }} paths</el-tag><span v-else>{{ row.rule.excludes?.length ?? 0 }} excludes · {{ row.rule['if-exists']?.length ?? 0 }} conditional</span></template></el-table-column><el-table-column label="Actions" width="160"><template #default="{row}"><el-button link type="primary" @click="editRule(row.name)">Edit</el-button><el-button link type="danger" @click="removeRule(row.name)">Delete</el-button></template></el-table-column></el-table><el-empty v-if="!entries.length" description="No rules configured"/></el-card></section></template>
+<style scoped>.page{max-width:960px;margin:auto}.heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}.heading h1{margin:0;font-size:27px}.heading p{color:#8a9ab1}</style>

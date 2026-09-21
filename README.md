@@ -1,36 +1,33 @@
-# TimeMachine Exclude (tmexclude)
+# tmx
 
-[CHANGELOG](./CHANGELOG.md)
+tmx watches your filesystem and excludes selected files (such as `node_modules` and `target`) from Time Machine backups. You can also run a full scan from the app.
 
-Exclude undesired files (node_modules, target, etc) from your TimeMachine backup.
+## Original project
 
-This utility watches your filesystem and excludes the files once they appear, so you won't accidentally include them
-in your backups. Full scans can also be performed manually to ensure no file slips through the watcher.
-
-Screenshots available [here](#screenshots).
-
-*If you find this utility useful, please consider [buy me a coffee](https://buymeacoffee.com/lightquantum).*
+This project is a continuation of [TimeMachine Exclude (tmexclude)](https://github.com/PhotonQuantum/tmexclude) by [LightQuantum](https://github.com/PhotonQuantum). The original source is licensed under the [MIT License](LICENSE.txt), and its commit history and copyright notices are retained.
 
 ## Installation
 
-Binary releases are available [here](https://github.com/PhotonQuantum/tmexclude/releases).
+Download a release from this repository's [Releases](../../releases) page, or build locally on macOS:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm tauri build
+```
+
+For development, run `pnpm tauri dev`. Rust and the macOS development tools are required.
+
+The frontend uses Vue 3 with `<script setup>`, Vite, Pinia, and UnoCSS (Wind 4 / Tailwind 4 compatible preset).
 
 ## Configuration
 
-While you may configure tmexclude through the GUI, you may also use a configuration file.
-
-See [`config.example.yaml`](config.example.yaml) for an example configuration file.
-
-The config file is located at `~/.config/tmexclude.yaml`.
-A default config is generated when the application starts if it doesn't exist.
-
-After modifying the config file manually, you must restart the application for the changes to take effect.
+You can configure tmx in the GUI or edit `~/.config/tmexclude.yaml`. This legacy filename is retained so existing rules load after upgrading. Restart the app after manual edits. See [config.example.yaml](config.example.yaml) for an example.
 
 ## Screenshots
 
-![overview_page](./doc/screenshot1.jpeg)
-![scan_page](./doc/screenshot2.jpeg)
+![Overview](doc/screenshot1.jpeg)
+![Scan](doc/screenshot2.jpeg)
 
 ## License
 
-This project is licensed under [MIT License](LICENSE.txt).
+[MIT](LICENSE.txt)

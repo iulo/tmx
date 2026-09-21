@@ -3,6 +3,7 @@ import {useIsOverflow} from "../utils";
 import {useMergedRef} from "@mantine/hooks";
 
 export interface TipTextProps extends TextProps {
+  children?: React.ReactNode;
   ref?: any;
   withinPortal?: boolean
 }

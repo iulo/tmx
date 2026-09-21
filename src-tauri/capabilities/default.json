@@ -1,0 +1,14 @@
+{
+  "identifier": "default",
+  "description": "Permissions for the local tmx windows",
+  "local": true,
+  "windows": ["main", "about", "ack", "license"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-show",
+    "core:window:allow-start-dragging",
+    "dialog:allow-open",
+    "autostart:default",
+    "opener:default"
+  ]
+}

@@ -1,26 +1,26 @@
 import {PreConfig} from "./bindings/PreConfig";
 import {ScanStatus} from "./bindings/ScanStatus";
 import {ExclusionActionBatch} from "./bindings/ExclusionActionBatch";
-import {InvokeArgs} from "@tauri-apps/api/tauri";
+import {InvokeArgs} from "@tauri-apps/api/core";
 
 const invoke = async <T>(cmd: string, args?: InvokeArgs) => {
   if (typeof window === "undefined") {
     return null;
   }
-  const _invoke = await import("@tauri-apps/api").then((api) => api.invoke);
+  const _invoke = await import("@tauri-apps/api/core").then((api) => api.invoke);
   return await _invoke<T>(cmd, args);
 };
 
 export const enableAutoStart = async () => {
-  return await invoke<void>('plugin:auto_launch|enable')
+  return await import('@tauri-apps/plugin-autostart').then(api => api.enable())
 }
 
 export const disableAutoStart = async () => {
-  return await invoke<void>('plugin:auto_launch|disable')
+  return await import('@tauri-apps/plugin-autostart').then(api => api.disable())
 }
 
 export const getAutoStart = async () => {
-  return await invoke<boolean>('plugin:auto_launch|is_enabled') ?? false;
+  return await import('@tauri-apps/plugin-autostart').then(api => api.isEnabled());
 }
 
 export const getStore = async (key: string) => {

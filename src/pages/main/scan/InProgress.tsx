@@ -2,7 +2,7 @@ import {motion} from "framer-motion";
 import {useRecoilValue} from "recoil";
 import {scanCurrentState} from "../../../states";
 import {ActionIcon, Stack, Text, ThemeIcon, useMantineTheme} from "@mantine/core";
-import {IconSearch, IconSquare} from "@tabler/icons";
+import {IconSearch, IconSquare} from "@tabler/icons-react";
 import React from "react";
 import {useAnimateStyles} from "../../../utils";
 import {fadeAnimation} from "../../../transitions";
@@ -19,7 +19,7 @@ export const InProgress = React.forwardRef(() => {
   } = useRecoilValue(scanCurrentState);
   const theme = useMantineTheme();
   const {classes} = useAnimateStyles();
-  const moreDimmed = theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5];
+  const moreDimmed = "light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3))";
 
   return (
     <motion.div key={"inProgress"} style={{height: "100%"}} {...fadeAnimation}>
@@ -27,11 +27,11 @@ export const InProgress = React.forwardRef(() => {
         <ThemeIcon size={128} radius={64} variant={"gradient"}>
           <IconSearch size={72} strokeWidth={1} className={classes.circle}/>
         </ThemeIcon>
-        <Stack spacing={"xs"} align={"center"}>
+        <Stack gap={"xs"} align={"center"}>
           <Text size={"xl"}>{t('scanning_system')}</Text>
-          <PathText size={"sm"} color={moreDimmed} align={"center"} lineClamp={1} keepFirst={4} keepLast={2}
+          <PathText size={"sm"} c={moreDimmed} ta={"center"} lineClamp={1} keepFirst={4} keepLast={2}
                     path={path}/>
-          <Text size={"sm"} color={"dimmed"}>{t('found_files', {count: found})}</Text>
+          <Text size={"sm"} c={"dimmed"}>{t('found_files', {count: found})}</Text>
           <ActionIcon variant={"default"} radius={16} size={32} onClick={stopFullScan}>
             <IconSquare size={16} strokeWidth={1.5}/>
           </ActionIcon>

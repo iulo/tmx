@@ -1,4 +1,5 @@
 #![allow(clippy::module_name_repetitions, clippy::needless_pass_by_value)]
+#![allow(unexpected_cfgs)]
 #![cfg_attr(
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
@@ -13,22 +14,22 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 use tap::TapFallible;
 use tauri::{
-    ActivationPolicy, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
-    SystemTrayMenuItem,
+    menu::{Menu, MenuItem, PredefinedMenuItem},
+    tray::TrayIconBuilder,
+    ActivationPolicy, Manager,
 };
 use tracing::{error, instrument};
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 use window_vibrancy::NSVisualEffectMaterial;
 
-use tmexclude_lib::{
+use tmx_lib::{
     ApplyErrors, ConfigManager, ExclusionActionBatch, Metrics, Mission, PreConfig, ScanStatus,
     Store,
 };
 
 use crate::decorations::WindowExt;
 use crate::metadata::build_meta;
-use crate::plugins::{BackgroundPlugin, EnvironmentPlugin};
 
 mod decorations;
 mod metadata;
@@ -106,22 +107,46 @@ fn store_del(mission: tauri::State<Arc<Mission>>, key: &str) {
     mission.store_del(key)
 }
 
-fn system_tray() -> SystemTray {
-    let preference = CustomMenuItem::new("preference", "Preference");
-    let about = CustomMenuItem::new("about", "About");
-    let quit = CustomMenuItem::new("quit", "Quit");
-    let tray_menu = SystemTrayMenu::new()
-        .add_item(preference)
-        .add_item(about)
-        .add_native_item(SystemTrayMenuItem::Separator)
-        .add_item(quit);
-    SystemTray::new().with_menu(tray_menu)
+fn system_tray(app: &tauri::App) -> tauri::Result<()> {
+    let preference = MenuItem::with_id(app, "preference", "Preference", true, None::<&str>)?;
+    let about = MenuItem::with_id(app, "about", "About", true, None::<&str>)?;
+    let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
+    let tray_menu = Menu::with_items(
+        app,
+        &[
+            &preference,
+            &about,
+            &PredefinedMenuItem::separator(app)?,
+            &quit,
+        ],
+    )?;
+    TrayIconBuilder::new()
+        .icon(app.default_window_icon().unwrap().clone())
+        .icon_as_template(true)
+        .menu(&tray_menu)
+        .on_menu_event(|app, event| match event.id.as_ref() {
+            "preference" | "about" => {
+                let label = if event.id.as_ref() == "preference" {
+                    "main"
+                } else {
+                    "about"
+                };
+                if let Some(window) = app.get_webview_window(label) {
+                    let _ = window.show();
+                    let _ = window.set_focus();
+                }
+            }
+            "quit" => app.exit(0),
+            _ => {}
+        })
+        .build(app)?;
+    Ok(())
 }
 
 fn main() {
     static PATH_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#""/.*""#).unwrap());
     let _guard = sentry::init((
-        env!("SENTRY_DSN"),
+        option_env!("SENTRY_DSN").unwrap_or(""),
         sentry::ClientOptions {
             release: Some(build_meta().version.into()),
             before_send: Some(Arc::new(|mut ev| {
@@ -148,30 +173,13 @@ fn main() {
 
     let config_manager = ConfigManager::new().unwrap();
     tauri::Builder::default()
-        .system_tray(system_tray())
-        .on_system_tray_event(|app, ev| {
-            if let SystemTrayEvent::MenuItemClick { id, .. } = ev {
-                match id.as_str() {
-                    "preference" => {
-                        let window = app.get_window("main").unwrap();
-                        window.show().unwrap();
-                        window.set_focus().unwrap();
-                    }
-                    "about" => {
-                        let window = app.get_window("about").unwrap();
-                        window.show().unwrap();
-                        window.set_focus().unwrap();
-                    }
-                    "quit" => {
-                        app.exit(0);
-                    }
-                    _ => {}
-                }
-            }
-        })
-        .plugin(BackgroundPlugin)
-        .plugin(EnvironmentPlugin)
-        .plugin(plugins::auto_launch::init())
+        .plugin(plugins::background())
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_autostart::init(
+            tauri_plugin_autostart::MacosLauncher::LaunchAgent,
+            None,
+        ))
         .invoke_handler(tauri::generate_handler![
             metrics,
             get_config,
@@ -186,12 +194,21 @@ fn main() {
             store_del
         ])
         .setup(move |app| {
-            let store = Store::new(&app.path_resolver().app_config_dir().unwrap());
+            plugins::hide_on_close(app);
+            system_tray(app)?;
+            let config_dir = app.path().app_config_dir()?;
+            let legacy_dir = config_dir.with_file_name("me.lightquantum.tmexclude");
+            let legacy_store = legacy_dir.join(".properties");
+            if !config_dir.join(".properties").exists() && legacy_store.exists() {
+                std::fs::create_dir_all(&config_dir)?;
+                std::fs::copy(legacy_store, config_dir.join(".properties"))?;
+            }
+            let store = Store::new(&config_dir);
             app.manage(
-                Mission::new_arc(app.handle(), config_manager, store)
+                Mission::new_arc(app.handle().clone(), config_manager, store)
                     .expect("failed to create mission"),
             );
-            let main_window = app.get_window("main").unwrap();
+            let main_window = app.get_webview_window("main").unwrap();
             window_vibrancy::apply_vibrancy(
                 &main_window,
                 NSVisualEffectMaterial::Sidebar,

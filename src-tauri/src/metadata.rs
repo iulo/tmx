@@ -11,7 +11,7 @@ pub struct BuildMeta {
 impl Default for BuildMeta {
     fn default() -> Self {
         Self {
-            version: env!("VERGEN_GIT_SEMVER").to_string(),
+            version: env!("CARGO_PKG_VERSION").to_string(),
             timestamp: env!("VERGEN_BUILD_TIMESTAMP").to_string(),
         }
     }

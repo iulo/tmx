@@ -1,13 +1,13 @@
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import {configChangedState, draftConfigState} from "../../states";
-import {Box, Button, Group, Header, Text, Tooltip} from "@mantine/core";
-import {IconAdjustments, IconAlertTriangle} from "@tabler/icons";
+import {Box, Button, Group, Text, Tooltip} from "@mantine/core";
+import {IconAdjustments, IconAlertTriangle} from "@tabler/icons-react";
 import React, {useState} from "react";
 import {evDrag} from "../../utils";
 import {useTranslation} from "react-i18next";
 import {setConfig} from "../../commands";
 
-export const MainHeader = React.forwardRef<HTMLElement>((props, ref) => {
+export const MainHeader = React.forwardRef<HTMLDivElement>((props, ref) => {
   const {t} = useTranslation();
 
   const changed = useRecoilValue(configChangedState);
@@ -33,15 +33,15 @@ export const MainHeader = React.forwardRef<HTMLElement>((props, ref) => {
   }
 
   return (
-    <Header ref={ref} height={55} p="xs"
+    <Box ref={ref} h={55} p="xs"
             styles={(theme) => ({
               root: {
-                background: theme.colorScheme === "dark" ? "#38343C" : "#F6F2F9",
+                background: "light-dark(#F6F2F9, #38343C)",
               }
             })}
             onMouseDown={evDrag}>
-      <Group spacing={"xs"} p={5} sx={(theme) => ({
-        color: theme.colorScheme === "dark" ? "#ffffff" : "inherit",
+      <Group gap={"xs"} p={5} sx={(theme) => ({
+        color: "light-dark(inherit, #ffffff)",
         alignItems: "flex-start"
       })}>
         <Box sx={{
@@ -53,18 +53,18 @@ export const MainHeader = React.forwardRef<HTMLElement>((props, ref) => {
         <Text size={"md"}>{t('preference')}</Text>
         {changed && <>
           <Box sx={{flexGrow: 1}}/>
-          <Button variant={"subtle"} compact sx={{boxShadow: "none"}}
+          <Button variant={"subtle"} size="compact-xs" sx={{boxShadow: "none"}}
                   onClick={() => resetDraftConfig()}>
             {t('reset')}
           </Button>
           <Tooltip color={"orange"} label={error ?? ""} disabled={error === null} withArrow>
-            <Button color={error !== null ? "orange" : undefined} compact
-                    leftIcon={error !== null && <IconAlertTriangle color={"white"} size={16} strokeWidth={1.5}/>}
+            <Button color={error !== null ? "orange" : undefined} size="compact-xs"
+                    leftSection={error !== null && <IconAlertTriangle color={"white"} size={16} strokeWidth={1.5}/>}
                     onClick={() => updateFinalConfig()}>
               {t('save')}
             </Button>
           </Tooltip>
         </>}
       </Group>
-    </Header>)
+    </Box>)
 });

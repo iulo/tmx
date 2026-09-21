@@ -1,5 +1,5 @@
 import {Button, Group, Stack, Text, Tooltip} from "@mantine/core";
-import {IconAlertTriangle, IconChevronLeft} from "@tabler/icons";
+import {IconAlertTriangle, IconChevronLeft} from "@tabler/icons-react";
 import React, {useState} from "react";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {
@@ -26,8 +26,8 @@ export const Detail = React.forwardRef(() => {
 
   const truncatedNote = (count: number) => (
     <Tooltip label={t("showing_n_rows", {count})}>
-      <Group spacing={"xs"}>
-        <Text size={"xs"} color={"orange"}>{t('truncated')}</Text>
+      <Group gap={"xs"}>
+        <Text size={"xs"} c={"orange"}>{t('truncated')}</Text>
         <IconAlertTriangle size={16} strokeWidth={1} color={"orange"}/>
       </Group>
     </Tooltip>);
@@ -38,13 +38,13 @@ export const Detail = React.forwardRef(() => {
         height: "100%",
       }}>
         <Button size={"xs"} mr={"auto"} sx={{boxShadow: "none"}} variant={"subtle"}
-                leftIcon={<IconChevronLeft size={16} strokeWidth={1}/>}
+                leftSection={<IconChevronLeft size={16} strokeWidth={1}/>}
                 onClick={() => setScanPage("scan")}>
           {t('back')}
         </Button>
-        <Stack spacing={"xs"} sx={{height: "100%"}}>
-          <Group position={"apart"}>
-            <Text size={"xs"} color={"dimmed"}>{t('files_to_be_excluded')}</Text>
+        <Stack gap={"xs"} sx={{height: "100%"}}>
+          <Group justify={"space-between"}>
+            <Text size={"xs"} c={"dimmed"}>{t('files_to_be_excluded')}</Text>
             {addTrunc !== null && truncatedNote(addTrunc)}
           </Group>
           <SelectionTable
@@ -52,8 +52,8 @@ export const Detail = React.forwardRef(() => {
             data={addData} selection={addSelection}
             limit={100} onChange={setAddSelection} onTruncated={setAddTrunc}
           />
-          <Group position={"apart"}>
-            <Text size={"xs"} color={"dimmed"}>{t('files_to_be_included')}</Text>
+          <Group justify={"space-between"}>
+            <Text size={"xs"} c={"dimmed"}>{t('files_to_be_included')}</Text>
             {removeTrunc !== null && truncatedNote(removeTrunc)}
           </Group>
           <SelectionTable

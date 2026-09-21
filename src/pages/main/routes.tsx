@@ -1,5 +1,5 @@
 import {ReactElement} from "react";
-import {IconChartBubble, IconFolders, IconHomeSearch, IconSettings, IconTemplate} from "@tabler/icons";
+import {IconChartBubble, IconFolders, IconHomeSearch, IconSettings, IconTemplate} from "@tabler/icons-react";
 import {TFunction} from "i18next";
 
 export type NavLink = {

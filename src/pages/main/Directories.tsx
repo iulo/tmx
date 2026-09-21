@@ -1,9 +1,9 @@
+import {createStyles} from "@mantine/emotion";
 import {
   Badge,
   Box,
   Button,
   Container,
-  createStyles,
   MultiSelect,
   Popover,
   ScrollArea,
@@ -11,13 +11,13 @@ import {
   Table,
   Text
 } from "@mantine/core";
-import {IconMinus, IconPlus} from "@tabler/icons";
+import {IconMinus, IconPlus} from "@tabler/icons-react";
 import React, {useState} from "react";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {dirsState, perDirState, ruleNamesState, skipsState} from "../../states";
-import {open} from "@tauri-apps/api/dialog";
+import {open} from "@tauri-apps/plugin-dialog";
 import _ from "lodash";
-import {createScopedKeydownHandler} from "@mantine/utils";
+import {createScopedKeydownHandler} from "@mantine/core";
 import {PathText} from "../../components/PathText";
 import {useTranslation} from "react-i18next";
 
@@ -28,9 +28,7 @@ const buttonStyles = {
 
 const useStyles = createStyles((theme) => ({
   rowSelected: {
-    backgroundColor: theme.colorScheme === 'dark' ?
-      theme.fn.rgba(theme.colors[theme.primaryColor][7], 0.2) :
-      theme.colors[theme.primaryColor][0],
+    backgroundColor: 'light-dark(var(--mantine-color-blue-0), rgba(25, 113, 194, 0.2))',
   },
 }));
 
@@ -77,13 +75,13 @@ const WatchedDirItem = React.memo(({
           }}/>
         </td>
         <td>{rules.map((rule) => (<Badge key={rule} variant={"light"}>
-          <Text size={9} sx={{cursor: "pointer"}}>{rule}</Text>
+          <Text size="xs" sx={{cursor: "pointer"}}>{rule}</Text>
         </Badge>))}</td>
       </Box>
     </Popover.Target>
     <Popover.Dropdown>
       <>
-        <Stack spacing={"xs"}>
+        <Stack gap={"xs"}>
           <MultiSelect
             searchable
             data={ruleNames}
@@ -140,7 +138,7 @@ const WatchedDir = () => {
         </tbody>
       </Table>
     </ScrollArea>
-    <Button ml={"auto"} size={"xs"} compact leftIcon={<IconPlus size={12}/>} styles={buttonStyles}
+    <Button ml={"auto"} size="compact-xs" leftSection={<IconPlus size={12}/>} styles={buttonStyles}
             variant={"default"}
             onClick={addDir}
     />
@@ -208,9 +206,9 @@ const SkippedDirs = () => {
       </Table>
     </ScrollArea>
     <Button.Group ml={"auto"}>
-      <Button size={"xs"} compact leftIcon={<IconPlus size={12}/>} styles={buttonStyles} variant={"default"}
+      <Button size="compact-xs" leftSection={<IconPlus size={12}/>} styles={buttonStyles} variant={"default"}
               onClick={addDir}/>
-      <Button size={"xs"} compact leftIcon={<IconMinus size={12}/>} styles={buttonStyles} variant={"default"}
+      <Button size="compact-xs" leftSection={<IconMinus size={12}/>} styles={buttonStyles} variant={"default"}
               disabled={!mayRemove}
               onClick={() => {
                 removeDir(selected);
@@ -222,7 +220,7 @@ const SkippedDirs = () => {
 
 export const Directories = () => {
   return (<Container sx={{height: "100%"}}>
-    <Stack py={"xl"} spacing={"xs"} sx={{height: "100%"}}>
+    <Stack py={"xl"} gap={"xs"} sx={{height: "100%"}}>
       <WatchedDir/>
       <SkippedDirs/>
     </Stack>

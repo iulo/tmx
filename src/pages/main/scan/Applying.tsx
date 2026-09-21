@@ -1,5 +1,5 @@
 import {Group, Loader, Stack, Text, ThemeIcon} from "@mantine/core";
-import {IconTool} from "@tabler/icons";
+import {IconTool} from "@tabler/icons-react";
 import React from "react";
 import {useAnimateStyles} from "../../../utils";
 import {fadeAnimation} from "../../../transitions";
@@ -16,9 +16,9 @@ export const Applying = React.forwardRef(() => {
         <ThemeIcon size={128} radius={64} variant={"gradient"}>
           <IconTool size={72} strokeWidth={1} className={classes.circle}/>
         </ThemeIcon>
-        <Stack align={"center"} spacing={"lg"}>
+        <Stack align={"center"} gap={"lg"}>
           <Text size={"xl"}>{t('applying_changes')}</Text>
-          <Group spacing={"xs"} align={"center"}>
+          <Group gap={"xs"} align={"center"}>
             <Loader size={"xs"}/>
             <Text size={"xs"}>{t('setting_file_attributes')}</Text>
           </Group>
