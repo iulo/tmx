@@ -15,7 +15,7 @@ use regex::Regex;
 use tap::TapFallible;
 use tauri::{
     menu::{Menu, MenuItem, PredefinedMenuItem},
-    tray::TrayIconBuilder,
+    tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     ActivationPolicy, Manager,
 };
 use tracing::{error, instrument};
@@ -109,13 +109,11 @@ fn store_del(mission: tauri::State<Arc<Mission>>, key: &str) {
 
 fn system_tray(app: &tauri::App) -> tauri::Result<()> {
     let preference = MenuItem::with_id(app, "preference", "Preference", true, None::<&str>)?;
-    let about = MenuItem::with_id(app, "about", "About", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
     let tray_menu = Menu::with_items(
         app,
         &[
             &preference,
-            &about,
             &PredefinedMenuItem::separator(app)?,
             &quit,
         ],
@@ -124,14 +122,22 @@ fn system_tray(app: &tauri::App) -> tauri::Result<()> {
         .icon(app.default_window_icon().unwrap().clone())
         .icon_as_template(true)
         .menu(&tray_menu)
+        .on_tray_icon_event(|tray, event| {
+            if let TrayIconEvent::Click {
+                button: MouseButton::Left,
+                button_state: MouseButtonState::Up,
+                ..
+            } = event
+            {
+                if let Some(window) = tray.app_handle().get_webview_window("main") {
+                    let _ = window.show();
+                    let _ = window.set_focus();
+                }
+            }
+        })
         .on_menu_event(|app, event| match event.id.as_ref() {
-            "preference" | "about" => {
-                let label = if event.id.as_ref() == "preference" {
-                    "main"
-                } else {
-                    "about"
-                };
-                if let Some(window) = app.get_webview_window(label) {
+            "preference" => {
+                if let Some(window) = app.get_webview_window("main") {
                     let _ = window.show();
                     let _ = window.set_focus();
                 }
