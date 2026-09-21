@@ -14,6 +14,7 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 use tap::TapFallible;
 use tauri::{
+    image::Image,
     menu::{Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     ActivationPolicy, Manager,
@@ -111,8 +112,9 @@ fn system_tray(app: &tauri::App) -> tauri::Result<()> {
         app,
         &[&preference, &PredefinedMenuItem::separator(app)?, &quit],
     )?;
+    let tray_icon = Image::from_bytes(include_bytes!("../icons/tray_icon.png"))?;
     TrayIconBuilder::new()
-        .icon(app.default_window_icon().unwrap().clone())
+        .icon(tray_icon)
         .icon_as_template(true)
         .menu(&tray_menu)
         .show_menu_on_left_click(false)
