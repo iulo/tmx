@@ -4,7 +4,7 @@ version = "0.3.0"
 description = "Exclude selected files from Time Machine backups"
 authors = ["LightQuantum <self@lightquantum.me>"]
 license = "MIT"
-repository = ""
+repository = "https://github.com/iulo/tmx"
 edition = "2021"
 rust-version = "1.88"
 
@@ -38,7 +38,7 @@ tap = "1.0"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 thiserror = "1.0"
-ts-rs = "12"
+ts-rs = { version = "12", features = ["no-serde-warnings"] }
 eyre = "0.6"
 xattr = "1.0"
 jwalk = "0.8"

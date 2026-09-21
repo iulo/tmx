@@ -21,17 +21,14 @@ use tauri::{
 use tracing::{error, instrument};
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
-use window_vibrancy::NSVisualEffectMaterial;
 
 use tmx_lib::{
     ApplyErrors, ConfigManager, ExclusionActionBatch, Metrics, Mission, PreConfig, ScanStatus,
     Store,
 };
 
-use crate::decorations::WindowExt;
 use crate::metadata::build_meta;
 
-mod decorations;
 mod metadata;
 mod plugins;
 
@@ -108,20 +105,17 @@ fn store_del(mission: tauri::State<Arc<Mission>>, key: &str) {
 }
 
 fn system_tray(app: &tauri::App) -> tauri::Result<()> {
-    let preference = MenuItem::with_id(app, "preference", "Preference", true, None::<&str>)?;
+    let preference = MenuItem::with_id(app, "preference", "Main Window", true, None::<&str>)?;
     let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
     let tray_menu = Menu::with_items(
         app,
-        &[
-            &preference,
-            &PredefinedMenuItem::separator(app)?,
-            &quit,
-        ],
+        &[&preference, &PredefinedMenuItem::separator(app)?, &quit],
     )?;
     TrayIconBuilder::new()
         .icon(app.default_window_icon().unwrap().clone())
         .icon_as_template(true)
         .menu(&tray_menu)
+        .show_menu_on_left_click(false)
         .on_tray_icon_event(|tray, event| {
             if let TrayIconEvent::Click {
                 button: MouseButton::Left,
@@ -214,15 +208,6 @@ fn main() {
                 Mission::new_arc(app.handle().clone(), config_manager, store)
                     .expect("failed to create mission"),
             );
-            let main_window = app.get_webview_window("main").unwrap();
-            window_vibrancy::apply_vibrancy(
-                &main_window,
-                NSVisualEffectMaterial::Sidebar,
-                None,
-                None,
-            )
-            .expect("unable to apply vibrancy");
-            main_window.set_trafficlights_position(20., 20.);
             app.set_activation_policy(ActivationPolicy::Accessory);
             Ok(())
         })

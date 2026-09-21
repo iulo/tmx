@@ -49,16 +49,16 @@
     "windows": [
       {
         "label": "main",
-        "title": "Preferences",
+        "title": "tmx",
         "url": "/#/main/stats",
         "fullscreen": false,
         "resizable": true,
         "visible": false,
         "height": 600,
         "width": 800,
-        "transparent": true,
-        "titleBarStyle": "Overlay",
-        "hiddenTitle": true,
+        "transparent": false,
+        "titleBarStyle": "Visible",
+        "hiddenTitle": false,
         "useHttpsScheme": true
       },
       {
@@ -71,8 +71,8 @@
         "visible": false,
         "height": 300,
         "width": 430,
-        "hiddenTitle": true,
-        "titleBarStyle": "Overlay",
+        "hiddenTitle": false,
+        "titleBarStyle": "Visible",
         "useHttpsScheme": true
       },
       {

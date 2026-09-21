@@ -7,6 +7,7 @@
   "directories": "目录",
   "actions": "动作",
   "scan": "扫描",
+  "about": "关于",
   "contact_me": "联系我",
   "build": "构建 {{version}}, 于 {{date, datetime}} 构建",
   "package": "软件包",

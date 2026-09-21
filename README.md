@@ -4,7 +4,7 @@ tmx watches your filesystem and excludes selected files (such as `node_modules` 
 
 ## Original project
 
-This project is a continuation of [TimeMachine Exclude (tmexclude)](https://github.com/PhotonQuantum/tmexclude) by [LightQuantum](https://github.com/PhotonQuantum). The original source is licensed under the [MIT License](LICENSE.txt), and its commit history and copyright notices are retained.
+This project is maintained at [github.com/iulo/tmx](https://github.com/iulo/tmx) and continues [TimeMachine Exclude (tmexclude)](https://github.com/PhotonQuantum/tmexclude) by [LightQuantum](https://github.com/PhotonQuantum). The original source is licensed under the [MIT License](LICENSE.txt), and its commit history and copyright notices are retained.
 
 ## Installation
 

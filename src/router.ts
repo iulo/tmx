@@ -17,6 +17,7 @@ export default createRouter({history: createWebHashHistory(), routes: [
     {path: 'rules', component: Rules},
     {path: 'directories', component: Directories},
     {path: 'scan', component: Scan},
+    {path: 'about', component: About},
   ]},
   {path: '/about', component: About},
   {path: '/ack', component: Acknowledgements},
