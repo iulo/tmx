@@ -14,12 +14,6 @@ export const cargoLicenses: License[] = [
     "license": "MIT OR Apache-2.0"
   },
   {
-    "name": "cocoa",
-    "version": "0.24.1",
-    "repository": "https://github.com/servo/core-foundation-rs",
-    "license": "MIT / Apache-2.0"
-  },
-  {
     "name": "core-foundation",
     "version": "0.9.3",
     "repository": "https://github.com/servo/core-foundation-rs",
@@ -35,12 +29,6 @@ export const cargoLicenses: License[] = [
     "name": "directories",
     "version": "4.0.1",
     "repository": "https://github.com/soc/directories-rs",
-    "license": "MIT OR Apache-2.0"
-  },
-  {
-    "name": "eyre",
-    "version": "0.6.8",
-    "repository": "https://github.com/yaahc/eyre",
     "license": "MIT OR Apache-2.0"
   },
   {
@@ -84,12 +72,6 @@ export const cargoLicenses: License[] = [
     "version": "0.9.6",
     "repository": "https://github.com/moka-rs/moka",
     "license": "MIT OR Apache-2.0"
-  },
-  {
-    "name": "objc",
-    "version": "0.2.7",
-    "repository": "http://github.com/SSheldon/rust-objc",
-    "license": "MIT"
   },
   {
     "name": "once_cell",
@@ -212,12 +194,6 @@ export const cargoLicenses: License[] = [
     "license": "MIT OR Apache-2.0"
   },
   {
-    "name": "window-vibrancy",
-    "version": "0.6.0",
-    "repository": "https://github.com/tauri-apps/tauri-plugin-vibrancy",
-    "license": "Apache-2.0 OR MIT"
-  },
-  {
     "name": "xattr",
     "version": "1.0.0",
     "repository": "https://github.com/Stebalien/xattr",
@@ -226,86 +202,14 @@ export const cargoLicenses: License[] = [
 ];
 export const npmLicenses: License[] = [
   {
-    "name": "@emotion/cache",
-    "version": "11.14.0",
-    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/cache",
-    "license": "MIT"
-  },
-  {
-    "name": "@emotion/react",
-    "version": "11.14.0",
-    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/react",
-    "license": "MIT"
-  },
-  {
-    "name": "@emotion/serialize",
-    "version": "1.3.3",
-    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/serialize",
-    "license": "MIT"
-  },
-  {
-    "name": "@emotion/server",
-    "version": "11.11.0",
-    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/server",
-    "license": "MIT"
-  },
-  {
-    "name": "@emotion/styled",
-    "version": "11.14.1",
-    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/styled",
-    "license": "MIT"
-  },
-  {
-    "name": "@emotion/utils",
-    "version": "1.4.2",
-    "repository": "https://github.com/emotion-js/emotion/tree/main/packages/utils",
-    "license": "MIT"
-  },
-  {
-    "name": "@mantine/core",
-    "version": "8.3.18",
-    "repository": "https://github.com/mantinedev/mantine.git",
-    "license": "MIT"
-  },
-  {
-    "name": "@mantine/emotion",
-    "version": "8.3.18",
-    "repository": "https://github.com/mantinedev/mantine.git",
-    "license": "MIT"
-  },
-  {
-    "name": "@mantine/hooks",
-    "version": "8.3.18",
-    "repository": "https://github.com/mantinedev/mantine.git",
-    "license": "MIT"
-  },
-  {
-    "name": "@mantine/notifications",
-    "version": "8.3.18",
-    "repository": "https://github.com/mantinedev/mantine.git",
-    "license": "MIT"
-  },
-  {
-    "name": "@parcel/config-default",
-    "version": "2.16.4",
-    "repository": "https://github.com/parcel-bundler/parcel.git",
-    "license": "MIT"
-  },
-  {
-    "name": "@parcel/transformer-inline-string",
-    "version": "2.16.4",
-    "repository": "https://github.com/parcel-bundler/parcel.git",
-    "license": "MIT"
-  },
-  {
-    "name": "@tabler/icons-react",
-    "version": "3.46.0",
-    "repository": "https://github.com/tabler/tabler-icons.git",
+    "name": "@element-plus/icons-vue",
+    "version": "2.3.2",
+    "repository": "https://github.com/element-plus/element-plus-icons.git",
     "license": "MIT"
   },
   {
     "name": "@tauri-apps/api",
-    "version": "2.11.1",
+    "version": "2.9.1",
     "repository": "https://github.com/tauri-apps/tauri.git",
     "license": "Apache-2.0 OR MIT"
   },
@@ -323,7 +227,7 @@ export const npmLicenses: License[] = [
   },
   {
     "name": "@tauri-apps/plugin-dialog",
-    "version": "2.7.3",
+    "version": "2.6.0",
     "repository": "https://github.com/tauri-apps/plugins-workspace",
     "license": "MIT OR Apache-2.0"
   },
@@ -334,99 +238,51 @@ export const npmLicenses: License[] = [
     "license": "MIT OR Apache-2.0"
   },
   {
-    "name": "@types/lodash",
-    "version": "4.17.25",
-    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
-    "license": "MIT"
-  },
-  {
     "name": "@types/node",
     "version": "26.6.1",
     "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
     "license": "MIT"
   },
   {
-    "name": "@types/react",
-    "version": "18.3.31",
-    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "name": "@unocss/preset-icons",
+    "version": "66.10.5",
+    "repository": "https://github.com/unocss/unocss.git",
     "license": "MIT"
   },
   {
-    "name": "@types/react-dom",
-    "version": "18.3.7",
-    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "name": "@unocss/preset-wind4",
+    "version": "66.10.5",
+    "repository": "https://github.com/unocss/unocss.git",
     "license": "MIT"
   },
   {
-    "name": "framer-motion",
-    "version": "13.4.0",
-    "repository": "https://github.com/motiondivision/motion/",
+    "name": "@unocss/reset",
+    "version": "66.10.5",
+    "repository": "https://github.com/unocss/unocss.git",
     "license": "MIT"
   },
   {
-    "name": "i18next",
-    "version": "26.4.2",
-    "repository": "https://github.com/i18next/i18next.git",
+    "name": "@unocss/vite",
+    "version": "66.10.5",
+    "repository": "https://github.com/unocss/unocss.git",
     "license": "MIT"
   },
   {
-    "name": "lodash",
-    "version": "4.18.1",
-    "repository": "lodash/lodash",
+    "name": "@vitejs/plugin-vue",
+    "version": "6.0.9",
+    "repository": "https://github.com/vitejs/vite-plugin-vue.git",
     "license": "MIT"
   },
   {
-    "name": "parcel",
-    "version": "2.16.4",
-    "repository": "https://github.com/parcel-bundler/parcel.git",
+    "name": "element-plus",
+    "version": "2.14.6",
+    "repository": "https://github.com/element-plus/element-plus.git",
     "license": "MIT"
   },
   {
-    "name": "process",
-    "version": "0.11.10",
-    "repository": "git://github.com/shtylman/node-process.git",
-    "license": "MIT"
-  },
-  {
-    "name": "react",
-    "version": "18.3.1",
-    "repository": "https://github.com/facebook/react.git",
-    "license": "MIT"
-  },
-  {
-    "name": "react-dom",
-    "version": "18.3.1",
-    "repository": "https://github.com/facebook/react.git",
-    "license": "MIT"
-  },
-  {
-    "name": "react-i18next",
-    "version": "17.0.14",
-    "repository": "https://github.com/i18next/react-i18next.git",
-    "license": "MIT"
-  },
-  {
-    "name": "react-router",
-    "version": "7.18.4",
-    "repository": "https://github.com/remix-run/react-router",
-    "license": "MIT"
-  },
-  {
-    "name": "react-timeago",
-    "version": "8.3.0",
-    "repository": "https://github.com/naman34/react-timeago.git",
-    "license": "MIT"
-  },
-  {
-    "name": "recoil",
-    "version": "0.7.7",
-    "repository": "https://github.com/facebookexperimental/Recoil.git",
-    "license": "MIT"
-  },
-  {
-    "name": "swr",
-    "version": "2.5.1",
-    "repository": "github:vercel/swr",
+    "name": "pinia",
+    "version": "3.0.4",
+    "repository": "https://github.com/vuejs/pinia.git",
     "license": "MIT"
   },
   {
@@ -434,5 +290,35 @@ export const npmLicenses: License[] = [
     "version": "7.0.2",
     "repository": "https://github.com/microsoft/TypeScript.git",
     "license": "Apache-2.0"
+  },
+  {
+    "name": "unocss",
+    "version": "66.10.5",
+    "repository": "https://github.com/unocss/unocss.git",
+    "license": "MIT"
+  },
+  {
+    "name": "vite",
+    "version": "7.3.6",
+    "repository": "https://github.com/vitejs/vite.git",
+    "license": "MIT"
+  },
+  {
+    "name": "vue",
+    "version": "3.5.43",
+    "repository": "https://github.com/vuejs/core.git",
+    "license": "MIT"
+  },
+  {
+    "name": "vue-i18n",
+    "version": "11.4.12",
+    "repository": "https://github.com/intlify/vue-i18n.git",
+    "license": "MIT"
+  },
+  {
+    "name": "vue-router",
+    "version": "4.6.4",
+    "repository": "https://github.com/vuejs/router.git",
+    "license": "MIT"
   }
 ];
