@@ -23,6 +23,6 @@ export const useAppStore = defineStore('app', () => {
   async function scan() { loading.value = true; await startFullScan(); status.value = await scanStatus() }
   async function stop() { await stopFullScan(); status.value = await scanStatus() }
   async function applyResult(batch: ExclusionActionBatch) { await applyActionBatch(batch); result.value = {add: [], remove: []} }
-  async function setAutoStart(value: boolean) { autoStart.value = value; value ? await enableAutoStart() : await disableAutoStart() }
+  async function setAutoStart(value: boolean) { value ? await enableAutoStart() : await disableAutoStart(); autoStart.value = value }
   return {config, status, loading, result, autoStart, rules, directories, load, save, addRule, addDirectory, removeDirectory, applyResult, setAutoStart, scan, stop}
 })
